@@ -1,1 +1,14 @@
-<p>courses works!</p>
+<div class="container-fluid px-5 bg-light" style="height: 800px;">
+    <div class="row mx-0 my-2">
+        <app-search></app-search>
+    </div>
+    <div class="row mx-0 my-2 justify-content-end">
+        <app-add-button></app-add-button>
+    </div>
+    <div class="row mx-0 my-2 bg-white" *ngFor="let course of courses">
+        <app-course-item [course]="course" (onDelete)="onDelete($event)"></app-course-item>
+    </div>
+    <div class="row mx-0 my-2 bg-white justify-content-center">
+        <app-load-more-button></app-load-more-button>
+    </div>
+</div>

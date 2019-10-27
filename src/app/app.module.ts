@@ -6,6 +6,12 @@ import { LogoComponent } from './logo/logo.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { CoursesComponent } from './courses/courses.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { SearchComponent } from './search/search.component';
+import { AddButtonComponent } from './add-button/add-button.component';
+import { CourseItemComponent } from './course-item/course-item.component';
+import { LoadMoreButtonComponent } from './load-more-button/load-more-button.component';
 
 @NgModule({
   declarations: [
@@ -13,10 +19,16 @@ import { CoursesComponent } from './courses/courses.component';
     LogoComponent,
     HeaderComponent,
     FooterComponent,
-    CoursesComponent
+    CoursesComponent,
+    BreadcrumbsComponent,
+    SearchComponent,
+    AddButtonComponent,
+    CourseItemComponent,
+    LoadMoreButtonComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
