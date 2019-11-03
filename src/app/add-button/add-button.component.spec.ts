@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AddButtonComponent } from './add-button.component';
 
@@ -8,7 +9,10 @@ describe('AddButtonComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddButtonComponent ]
+      declarations: [ AddButtonComponent ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+    ],
     })
     .compileComponents();
   }));
