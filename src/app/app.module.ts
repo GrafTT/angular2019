@@ -7,12 +7,13 @@ import { LogoComponent } from './logo/logo.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { CoursesComponent } from './courses/courses.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { SearchComponent } from './search/search.component';
 import { AddButtonComponent } from './add-button/add-button.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { LoadMoreButtonComponent } from './load-more-button/load-more-button.component';
+import { HighlightBorderDirective } from './highlight-border.directive';
+import { DurationPipe } from './duration.pipe';
 
 @NgModule({
   declarations: [
@@ -25,11 +26,12 @@ import { LoadMoreButtonComponent } from './load-more-button/load-more-button.com
     SearchComponent,
     AddButtonComponent,
     CourseItemComponent,
-    LoadMoreButtonComponent
+    LoadMoreButtonComponent,
+    HighlightBorderDirective,
+    DurationPipe
   ],
   imports: [
     BrowserModule,
-    FontAwesomeModule,
     FormsModule
   ],
   providers: [],

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { faPen, faTrash, faCalendarAlt, faClock } from '@fortawesome/free-solid-svg-icons';
-import { Course } from '../course';
+import { ICourse } from '../models/course';
 
 @Component({
   selector: 'app-course-item',
@@ -8,19 +7,31 @@ import { Course } from '../course';
   styleUrls: ['./course-item.component.css']
 })
 export class CourseItemComponent implements OnInit {
-  @Input() course: Course;
+  @Input() course: ICourse;
   @Output() onDelete = new EventEmitter<number>();
+  private borderColor: string;
   
   delete(id:number){
     this.onDelete.emit(id);
   }
-  faTrash = faTrash;
-  faPen = faPen;
-  faCalendarAlt = faCalendarAlt;
-  faClock = faClock;
   constructor() { }
 
   ngOnInit() {
+    this.switchBorderColor ();
+  }
+
+  private switchBorderColor ():void {
+    const today = Date.now();
+    const creationDate = Date.parse(this.course.creationDate)
+    const twoWeeks = 14 * 86400000;
+    const diff = today - creationDate;
+    if (diff > 0 && diff <= twoWeeks) {
+      this.borderColor = 'green';
+    } else if (diff < 0) {
+      this.borderColor = 'blue';
+    } else {
+      this.borderColor = 'transparent';
+    }
   }
 
 }
