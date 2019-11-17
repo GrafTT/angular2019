@@ -14,6 +14,8 @@ import { CourseItemComponent } from './course-item/course-item.component';
 import { LoadMoreButtonComponent } from './load-more-button/load-more-button.component';
 import { HighlightBorderDirective } from './highlight-border.directive';
 import { DurationPipe } from './duration.pipe';
+import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { DurationPipe } from './duration.pipe';
     CourseItemComponent,
     LoadMoreButtonComponent,
     HighlightBorderDirective,
-    DurationPipe
+    DurationPipe,
+    ConfirmModalComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
