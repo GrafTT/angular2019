@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { courses } from './mock-courses';
+import { CoursesService } from '../services/courses.service';
+import {ICourse} from '../models/course';
 
 @Component({
   selector: 'app-courses',
@@ -7,23 +8,22 @@ import { courses } from './mock-courses';
   styleUrls: ['./courses.component.css']
 })
 export class CoursesComponent implements OnInit, OnChanges {
-  courses = courses;
   name: string;
+  courses: ICourse[]
 
-  onDelete(id: number) {
-    console.log(id)
-  }
-  constructor() { 
-    console.log('constructor')
-  }
-
+  constructor(private coursesService : CoursesService) { }
+  
   ngOnInit() {
-    this.name = 'Bob';
-    console.log('OnInit')
+    this.courses = this.coursesService.getCourses();
   }
-
+  
   ngOnChanges(simple: SimpleChanges) {
     console.log('onChanges')
+  }
+
+  onDelete(id: number) {
+    this.coursesService.deleteCourse(id);
+    this.courses = this.coursesService.getCourses()
   }
 
 }

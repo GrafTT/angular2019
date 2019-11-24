@@ -1,4 +1,5 @@
-<app-header></app-header>
-<app-breadcrumbs></app-breadcrumbs>
-<app-courses></app-courses>
+<app-header (onLogin)="onLoginProccess()"></app-header>
+<app-login *ngIf="isLogining" (onSubmitLogin)="onLogedIn()"></app-login>
+<app-breadcrumbs *ngIf="!isLogining"></app-breadcrumbs>
+<app-courses *ngIf="!isLogining"></app-courses>
 <app-footer></app-footer>

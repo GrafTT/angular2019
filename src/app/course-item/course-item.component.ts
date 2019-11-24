@@ -12,7 +12,7 @@ export class CourseItemComponent implements OnInit {
   private borderColor: string;
   
   delete(id:number){
-    this.onDelete.emit(id);
+    confirm("Do you realy want to delete this course?") && this.onDelete.emit(id);
   }
   constructor() { }
 
