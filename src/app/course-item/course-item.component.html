@@ -1,10 +1,10 @@
-<div class="card border-light" [ngClass]="{'bg-warning':course.topRated}">
-    <div [appHighlightBorder]='borderColor' class="card-header" [ngClass]="{'bg-warning':course.topRated,'bg-white':!course.topRated}">
+<div class="card border-light" [ngClass]="{'bg-warning':course?.topRated}">
+    <div [appHighlightBorder]='borderColor' class="card-header" [ngClass]="{'bg-warning':course?.topRated,'bg-white':!course?.topRated}">
         <div class="d-flex w-75 justify-content-between align-items-center">
-            <h5 class="my-0">{{course?.title | uppercase}} <i *ngIf="course.topRated" class="fa fa-star"></i></h5>
+            <h5 class="my-0">{{course?.title | uppercase}} <i *ngIf="course?.topRated" class="fa fa-star"></i></h5>
             <p class="my-0 text-muted">
                 <span><i class="fa fa-clock"></i> {{course?.duration | timeDuration}}</span>
-                <span class="ml-2"><i class="fa fa-calendar-alt"></i> {{course?.creationDate | date:'d MMM, y'}}</span>
+                <span class="ml-2"><i class="fa fa-calendar-alt"></i> {{course?.creationDate }}</span>
             </p>
         </div>
     </div>

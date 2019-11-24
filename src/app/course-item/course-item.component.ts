@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { ICourse } from '../models/course';
 
 @Component({
@@ -9,7 +9,7 @@ import { ICourse } from '../models/course';
 export class CourseItemComponent implements OnInit {
   @Input() course: ICourse;
   @Output() onDelete = new EventEmitter<number>();
-  private borderColor: string;
+  borderColor: string;
   
   delete(id:number){
     confirm("Do you realy want to delete this course?") && this.onDelete.emit(id);
@@ -17,12 +17,14 @@ export class CourseItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.switchBorderColor ();
+  }
+  ngOnChanges() {
+    this.switchBorderColor();
   }
 
   private switchBorderColor ():void {
     const today = Date.now();
-    const creationDate = Date.parse(this.course.creationDate)
+    const creationDate = Date.parse(this.course.creationDate);
     const twoWeeks = 14 * 86400000;
     const diff = today - creationDate;
     if (diff > 0 && diff <= twoWeeks) {
