@@ -12,6 +12,8 @@ import { SearchComponent } from './search/search.component';
 import { AddButtonComponent } from './add-button/add-button.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { LoadMoreButtonComponent } from './load-more-button/load-more-button.component';
+import { HighlightBorderDirective } from './highlight-border.directive';
+import { DurationPipe } from './duration.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { LoadMoreButtonComponent } from './load-more-button/load-more-button.com
     SearchComponent,
     AddButtonComponent,
     CourseItemComponent,
-    LoadMoreButtonComponent
+    LoadMoreButtonComponent,
+    HighlightBorderDirective,
+    DurationPipe
   ],
   imports: [
     BrowserModule,
