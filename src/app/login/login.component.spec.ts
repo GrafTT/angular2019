@@ -30,7 +30,7 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent],
       imports: [FormsModule],
-      providers: [{provide: AuthService, useValue: userServiceStub}]
+      providers: [AuthService]
     })
     .compileComponents();
   }));
@@ -46,7 +46,7 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit submit', (done) => {
+  it('should emit submit', () => {
     // spyOn(component.onSubmitLogin, 'emit')
     // const nativeElement = fixture.nativeElement;
     // const button = nativeElement.querySelector('[type="submit"]');
@@ -63,12 +63,9 @@ describe('LoginComponent', () => {
   });
 
   it('should emit submit', () => {
-    component.email = userServiceStub.user.email
+    const service = TestBed.get(AuthService);
+    const userAuth = spyOn(service, 'login').and.callThrough();
     component.handleSubmit();
-    fixture.detectChanges();
-    expect(component.error).toEqual('');
-    component.email = ''
-    component.handleSubmit();
-    expect(component.error).toEqual('Wrong email!');
+    expect(userAuth).toHaveBeenCalled();
   });
 });
