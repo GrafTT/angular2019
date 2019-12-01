@@ -1,0 +1,4 @@
+<div class="form-group">
+    <label for="course_date">Date:</label>
+    <input type="date" class="form-control" id="course_date" [ngModel] ="createdDate | date:'MM-dd-yyyy'" (ngModelChange)="onChooseDate($event)">
+</div>

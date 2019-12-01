@@ -1,0 +1,7 @@
+<div class="d-flex align-items-center">
+    <div class="form-group">
+        <label for="course_duration">Duration:</label>
+        <input type="number" class="form-control" id="course_duration" [ngModel] ="duration" (ngModelChange)="onChooseDuration($event)">
+    </div>
+    <p class="my-0 ml-2">{{duration  | timeDuration}}</p>
+</div>

@@ -23,7 +23,8 @@ export class CoursesService {
     console.log(this.courses)
   }
   createCourse(course:ICourse) {
-    this.courses.push(course)
+    this.courses.push(course);
+    console.log(course)
   }
   updateCourse(id:number, payload:ICourse) {
     this.courses = this.courses.map(item => {
