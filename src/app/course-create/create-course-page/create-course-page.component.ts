@@ -31,6 +31,8 @@ export class CreateCoursePageComponent implements OnInit {
   }
 
   onSaveNewCourse() {
+    
+    console.log(this.course);
     this.coursesService.createCourse(this.course);
     this.save.emit()
   }

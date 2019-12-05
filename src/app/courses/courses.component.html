@@ -6,7 +6,7 @@
         <app-add-button (click)="onCreateCourse()"></app-add-button>
     </div>
     <div class="row mx-0 my-2 bg-white" *ngIf="courses.length > 0" >
-        <app-course-item *ngFor="let course of courses" [course]="course" (onDelete)="onDelete($event)"></app-course-item>
+        <app-course-item *ngFor="let course of courses" [course]="course" (onDelete)="onDelete($event)" class="w-100"></app-course-item>
     </div>
     <div class="row mx-0 my-2 bg-white" *ngIf="courses.length === 0" >
         <div class="alert alert-warning w-100 text-center" role="alert">
