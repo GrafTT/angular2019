@@ -8,9 +8,9 @@ import {AuthService} from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  private email:string = '';
-  private password:string = '';
-  private error:string = '';
+  email:string = '';
+  password:string = '';
+  error:string = '';
 
   @Output() onSubmitLogin = new EventEmitter()
   constructor(private auth: AuthService) { }

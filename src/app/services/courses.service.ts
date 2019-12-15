@@ -26,9 +26,11 @@ export class CoursesService {
     this.courses.push(course)
   }
   updateCourse(id:number, payload:ICourse) {
-    this.courses.forEach(item => {
+    this.courses = this.courses.map(item => {
       if (item.id === id) {
-        item = payload;
+        return payload;
+      } else {
+        return item;
       }
     })
   }

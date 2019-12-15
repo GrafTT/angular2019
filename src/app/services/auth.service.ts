@@ -5,7 +5,7 @@ import {IUser} from '../models/user';
   providedIn: 'root'
 })
 export class AuthService {
-  private user:IUser = {
+  user:IUser = {
     id: 0,
     firstName: 'Viacheslav',
     lastName: 'Lamash',
