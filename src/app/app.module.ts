@@ -13,9 +13,11 @@ import { AddButtonComponent } from './add-button/add-button.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { LoadMoreButtonComponent } from './load-more-button/load-more-button.component';
 import { HighlightBorderDirective } from './highlight-border.directive';
-import { DurationPipe } from './duration.pipe';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { LoginComponent } from './login/login.component';
+import { CourseCreateModule } from './course-create/course-create.module';
+import { GlobalPipesModule } from './global-pipes/global-pipes.module';
+
 
 @NgModule({
   declarations: [
@@ -30,13 +32,14 @@ import { LoginComponent } from './login/login.component';
     CourseItemComponent,
     LoadMoreButtonComponent,
     HighlightBorderDirective,
-    DurationPipe,
     ConfirmModalComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    CourseCreateModule,
+    GlobalPipesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

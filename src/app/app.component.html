@@ -1,5 +1,8 @@
 <app-header (onLogin)="onLoginProccess()"></app-header>
 <app-login *ngIf="isLogining" (onSubmitLogin)="onLogedIn()"></app-login>
-<app-breadcrumbs *ngIf="!isLogining"></app-breadcrumbs>
-<app-courses *ngIf="!isLogining"></app-courses>
+<div *ngIf="!isLogining">
+    <app-breadcrumbs></app-breadcrumbs>
+    <app-courses *ngIf="!isCreatingCourse" (create)="onCreateCourse()"></app-courses>
+    <app-create-course-page *ngIf="isCreatingCourse" (cancel)="onCancel()" (save)="onCreatedCourse()"></app-create-course-page>
+</div>
 <app-footer></app-footer>

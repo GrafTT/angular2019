@@ -1,0 +1,17 @@
+<div class="w-50 d-flex flex-column mx-auto my-0">
+    <div class="form-group">
+        <label for="course_title">Title:</label>
+        <input type="text" class="form-control" id="course_title" placeholder="Title" [(ngModel)]="course.title">
+    </div>
+    <div class="form-group">
+        <label for="course_descr">Description:</label>
+        <textarea class="form-control" id="course_descr" rows="4" [(ngModel)]="course.description"></textarea>
+    </div>
+    <app-datepicker (datepick)="course.creationDate = $event"></app-datepicker>
+    <app-duration-field (durationfill)="course.duration = $event"></app-duration-field>
+    <app-authors-field (authorsfill)="course.authors = $event"></app-authors-field>
+    <div>
+        <button type="buttont" class="btn btn-primary my-1" (click)="onSaveNewCourse()">Save</button>
+        <button type="buttont" class="btn btn-default my-1" (click)="onCancel()">Cancel</button>
+    </div>
+</div>

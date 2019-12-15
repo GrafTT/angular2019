@@ -7,10 +7,20 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   isLogining:boolean = false;
+  isCreatingCourse:boolean = false;
   onLoginProccess() {
     this.isLogining = true
   }
   onLogedIn() {
     this.isLogining = false;
+  }
+  onCreateCourse() {
+    this.isCreatingCourse = true;
+  }
+  onCreatedCourse() {
+    this.isCreatingCourse = false;
+  }
+  onCancel() {
+    this.isCreatingCourse = false;
   }
 }
