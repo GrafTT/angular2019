@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import {AuthService} from '../services/auth.service';
 
 @Component({
@@ -11,10 +12,11 @@ export class HeaderComponent implements OnInit {
   isAuth:boolean = false;
   @Output() onLogin = new EventEmitter();
 
-  constructor(private auth:AuthService) { }
+  constructor(private auth:AuthService, private router: Router) { }
 
   ngOnInit() {
-    this.isAuth = this.auth.isAuthenticate();
+    // this.isAuth = this.auth.isAuthenticate();
+    this.auth.isLogin.subscribe(islogin => this.isAuth = islogin)
     if (this.isAuth) {
       this.userLogin = this.auth.getUserInfo();
     }
@@ -26,6 +28,7 @@ export class HeaderComponent implements OnInit {
   handleLogoff() {
     this.auth.logout();
     this.isAuth = this.auth.isAuthenticate();
+    this.router.navigate(['/login'])
   }
 
 }

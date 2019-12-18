@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+
 import {IUser} from '../models/user';
 import {AuthService} from '../services/auth.service';
 
@@ -12,10 +14,11 @@ export class LoginComponent implements OnInit {
   password:string = '';
   error:string = '';
 
-  @Output() onSubmitLogin = new EventEmitter()
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   handleSubmit() {
     if (this.auth.login({
@@ -25,10 +28,10 @@ export class LoginComponent implements OnInit {
       lastName: '',
       password: ''
     })) {
-      this.onSubmitLogin.emit();
+      this.router.navigate(['/courses']);
+
     } else {
       this.error = 'Wrong email!'
-      console.log(this.error);
     }
   } 
 
