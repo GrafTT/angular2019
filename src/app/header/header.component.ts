@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import {IUserInfo} from '../models/userinfo';
 import {AuthService} from '../services/auth.service';
 
 @Component({
@@ -15,11 +16,12 @@ export class HeaderComponent implements OnInit {
   constructor(private auth:AuthService, private router: Router) { }
 
   ngOnInit() {
-    // this.isAuth = this.auth.isAuthenticate();
-    this.auth.isLogin.subscribe(islogin => this.isAuth = islogin)
-    if (this.isAuth) {
-      this.userLogin = this.auth.getUserInfo();
-    }
+    this.auth.isLogin.subscribe(islogin => {
+      this.isAuth = islogin;
+      if (this.isAuth) {
+        this.auth.getUserInfo().subscribe((data:IUserInfo )=> this.userLogin = data.login);
+      }
+    })
   }
 
   handleLogin() {
@@ -27,7 +29,6 @@ export class HeaderComponent implements OnInit {
   }
   handleLogoff() {
     this.auth.logout();
-    this.isAuth = this.auth.isAuthenticate();
     this.router.navigate(['/login'])
   }
 

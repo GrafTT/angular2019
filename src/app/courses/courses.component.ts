@@ -6,29 +6,47 @@ import {ICourse} from '../models/course';
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesComponent implements OnInit, OnChanges {
   name: string;
-  courses: ICourse[]
+  courses: ICourse[] = [];
+  isNoCourses:boolean = true;
+  step:number = 3;
   @Output() create = new EventEmitter()
 
   constructor(private coursesService : CoursesService) { }
   
   ngOnInit() {
-    this.courses = this.coursesService.getCourses();
+    this.coursesService.getCourses().subscribe((data: ICourse[]) => {
+      this.courses = data;
+    });
   }
   
-  ngOnChanges(simple: SimpleChanges) {
-    console.log('onChanges')
+  ngOnChanges() {
   }
 
-  onDelete(id: number) {
-    this.coursesService.deleteCourse(id);
-    this.courses = this.coursesService.getCourses()
+  handleLoadMoreBtn() {
+    this.coursesService.getCourses(0, this.step, '').subscribe((data: ICourse[]) => {
+      this.courses = data;
+    });
+    this.step += 3;
+  }
+
+  handleSearchCourses(query) {
+    this.coursesService.getCourses(0, 3, query).subscribe((data: ICourse[]) => {
+      this.courses = data;
+    });
+  }
+
+  handleDeleteCourseBtn(id: number) {
+    this.coursesService.deleteCourse(id).subscribe((data: ICourse[]) => {
+      console.log(data)
+      this.courses = data;
+    });
   }
   onCreateCourse() {
-    this.create.emit();
+    this.coursesService.createCourse
   }
 
 }

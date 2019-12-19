@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-load-more-button',
@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoadMoreButtonComponent implements OnInit {
 
+  @Output()click = new EventEmitter()
   constructor() { }
 
   ngOnInit() {
+  }
+  onClick() {
+    this.click.emit();
   }
 
 }

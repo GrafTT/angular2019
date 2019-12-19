@@ -20,19 +20,11 @@ export class LoginComponent implements OnInit {
 
   }
 
-  handleSubmit() {
-    if (this.auth.login({
-      id: 0,
-      email: this.email,
-      firstName: '',
-      lastName: '',
-      password: ''
-    })) {
-      this.router.navigate(['/courses']);
-
-    } else {
-      this.error = 'Wrong email!'
-    }
+  async handleSubmit() {
+    this.auth.login({
+      login: this.email,
+      password: this.password
+    });
   } 
 
 }
