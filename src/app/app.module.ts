@@ -26,6 +26,9 @@ import { GlobalPipesModule } from './global-pipes/global-pipes.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 import {AuthGuard} from './auth.guard';
+import { HttpClientModule, HTTP_INTERCEPTORS }   from '@angular/common/http';
+
+import { TokenInterceptor } from './interceptors/auth.interceptors';
 
 const appRoutes: Routes = [
   { path: '', component: CoursesComponent, canActivate: [AuthGuard]},
@@ -61,9 +64,17 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
-    GlobalPipesModule
+    GlobalPipesModule,
+    HttpClientModule
   ],
-  providers: [AuthGuard],
+  providers: [
+    AuthGuard, 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
