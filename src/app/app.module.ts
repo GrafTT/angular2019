@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 
+import {Routes, RouterModule} from '@angular/router'
+
 import { AppComponent } from './app.component';
 import { LogoComponent } from './logo/logo.component';
 import { HeaderComponent } from './header/header.component';
@@ -15,9 +17,27 @@ import { LoadMoreButtonComponent } from './load-more-button/load-more-button.com
 import { HighlightBorderDirective } from './highlight-border.directive';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { LoginComponent } from './login/login.component';
-import { CourseCreateModule } from './course-create/course-create.module';
-import { GlobalPipesModule } from './global-pipes/global-pipes.module';
 
+import { CreateCoursePageComponent } from './course-create/create-course-page/create-course-page.component';
+import { DatepickerComponent } from './course-create/datepicker/datepicker.component';
+import { DurationFieldComponent } from './course-create/duration-field/duration-field.component';
+import { AuthorsFieldComponent } from './course-create/authors-field/authors-field.component';
+import { GlobalPipesModule } from './global-pipes/global-pipes.module';
+import { NotFoundComponent } from './not-found/not-found.component';
+
+import {AuthGuard} from './auth.guard';
+import { HttpClientModule, HTTP_INTERCEPTORS }   from '@angular/common/http';
+
+import { TokenInterceptor } from './interceptors/auth.interceptors';
+
+const appRoutes: Routes = [
+  { path: '', component: CoursesComponent, canActivate: [AuthGuard]},
+  { path: 'courses/new', component: CreateCoursePageComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'courses/:id', component: CreateCoursePageComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+  { path: 'courses', component: CoursesComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+  { path: 'login', component: LoginComponent},
+  { path: '**', component: NotFoundComponent },
+]
 
 @NgModule({
   declarations: [
@@ -34,14 +54,27 @@ import { GlobalPipesModule } from './global-pipes/global-pipes.module';
     HighlightBorderDirective,
     ConfirmModalComponent,
     LoginComponent,
+    DatepickerComponent,
+    CreateCoursePageComponent,
+    DurationFieldComponent,
+    AuthorsFieldComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    CourseCreateModule,
-    GlobalPipesModule
+    RouterModule.forRoot(appRoutes),
+    GlobalPipesModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    AuthGuard, 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
