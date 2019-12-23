@@ -29,6 +29,7 @@ import {AuthGuard} from './auth.guard';
 import { HttpClientModule, HTTP_INTERCEPTORS }   from '@angular/common/http';
 
 import { TokenInterceptor } from './interceptors/auth.interceptors';
+import { LoadingComponent } from './loading/loading.component';
 
 const appRoutes: Routes = [
   { path: '', component: CoursesComponent, canActivate: [AuthGuard]},
@@ -59,6 +60,7 @@ const appRoutes: Routes = [
     DurationFieldComponent,
     AuthorsFieldComponent,
     NotFoundComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,

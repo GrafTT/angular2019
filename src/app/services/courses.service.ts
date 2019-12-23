@@ -3,13 +3,14 @@ import {ICourse} from '../models/course';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
+import {LoadingService} from '../services/loading.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
   courses:ICourse[] = []
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private loadingService: LoadingService) { }
 
   getCourses(start:number = 0, count:number = 3, textFragment:string = ''): Observable<ICourse[]> {
     return this.http.get(`http://localhost:3004/courses?start=${start}&count=${count}&textFragment=${textFragment}`).pipe(map((coursesList:any)=>{ return coursesList.map(item => {

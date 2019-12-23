@@ -11,10 +11,11 @@ export class SearchComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
   submitSearch() {
-    this.search.emit(this.searchField)
+    (this.searchField.length >= 3 || this.searchField.length === 0 ) && (this.search.emit(this.searchField));
   }
 
 }
