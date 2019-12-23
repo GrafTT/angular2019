@@ -1,37 +1,57 @@
 import { Injectable } from '@angular/core';
 import {IUser} from '../models/user';
+import {IUserInfo} from '../models/userinfo';
+import {LoadingService} from '../services/loading.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  user:IUser = {
-    id: 0,
-    firstName: 'Viacheslav',
-    lastName: 'Lamash',
-    email: 'test@test.ru',
-    password: '123456'
-  }
-  constructor() { }
+  isLogin = new BehaviorSubject(this.isAuthenticate());
+  token:string;
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': ''
+    })
+  };
+  constructor(private http: HttpClient, private router: Router, private loadingService: LoadingService) { }
 
   login(user:IUser) {
-    if (user.email === this.user.email) {
-      localStorage.setItem("user", JSON.stringify(user));
-      return true;
-    } else {
-      return false;
-    }
+    this.loadingService.isLoading(true);
+    this.http.post('http://localhost:3004/auth/login', user, this.httpOptions).subscribe((data: {token:string})=>{
+      this.loadingService.isLoading(false);
+      this.token = data.token;
+      if (this.token) {
+        localStorage.setItem("token", JSON.stringify(this.token));
+        this.isLogin.next(true);
+        this.router.navigate(['/courses']);
+      } else {
+        this.isLogin.next(false);
+      }
+    });
+
   }
   logout() {
-    localStorage.removeItem('user');
+    this.loadingService.isLoading(true);
+    localStorage.removeItem('token');
+    this.loadingService.isLoading(false);
+    this.isLogin.next(false);
   }
   isAuthenticate():boolean {
-    let authUser = localStorage.getItem('user');
+    let authUser = localStorage.getItem('token');
     return authUser ? true : false;
   }
-  getUserInfo():string {
-    let authUser = localStorage.getItem('user');
-    return authUser && JSON.parse(authUser).email;
+  getUserInfo():Observable<IUserInfo> {
+    let token = JSON.parse(localStorage.getItem('token'));
+    return this.http.post('http://localhost:3004/auth/userinfo', {token}, this.httpOptions).pipe(map((data:IUserInfo) => data))
+  }
+  getAuthToken():string {
+    return JSON.parse(localStorage.getItem('token'));
   }
 
 }
