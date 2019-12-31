@@ -1,8 +1,9 @@
-import { Component, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy, Output, EventEmitter, OnDestroy, ɵConsole } from '@angular/core';
 import { CoursesService } from '../services/courses.service';
 import { LoadingService } from '../services/loading.service';
+import { FibService } from '../fib.service';
 import {ICourse} from '../models/course';
-import { Subject } from 'rxjs';
+import { Subject, interval, Subscriber, Subscription } from 'rxjs';
 import { debounceTime, switchMap, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
@@ -11,15 +12,20 @@ import { debounceTime, switchMap, distinctUntilChanged, tap } from 'rxjs/operato
   styleUrls: ['./courses.component.css'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CoursesComponent implements OnInit, OnChanges {
+export class CoursesComponent implements OnInit, OnChanges, OnDestroy {
   name: string;
   courses: ICourse[] = [];
   isNoCourses:boolean = true;
   step:number = 3;
+  timer = interval(1000);
+  fibonacchi: Subscription;
   searchTerm$ = new Subject<string>();
+  timerId
   @Output() create = new EventEmitter()
 
-  constructor(private coursesService : CoursesService, private loadService: LoadingService) { }
+  constructor(private coursesService : CoursesService, private loadService: LoadingService, private fib:FibService) {
+    this.fibonacchi = this.timer.subscribe(x => console.log(this.fib.fibonachi()));
+   }
   
   ngOnInit() {
     this.loadService.isLoading(true);
@@ -65,6 +71,9 @@ export class CoursesComponent implements OnInit, OnChanges {
   }
   onCreateCourse() {
     this.coursesService.createCourse
+  }
+  ngOnDestroy() {
+    this.fibonacchi.unsubscribe();
   }
 
 }
