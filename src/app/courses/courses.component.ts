@@ -24,7 +24,7 @@ export class CoursesComponent implements OnInit, OnChanges, OnDestroy {
   @Output() create = new EventEmitter()
 
   constructor(private coursesService : CoursesService, private loadService: LoadingService, private fib:FibService) {
-    this.fibonacchi = this.timer.subscribe(x => console.log(this.fib.fibonachi()));
+    // this.fibonacchi = this.timer.subscribe(x => console.log(this.fib.fibonachi()));
    }
   
   ngOnInit() {
@@ -32,6 +32,7 @@ export class CoursesComponent implements OnInit, OnChanges, OnDestroy {
     this.coursesService.getCourses().subscribe((data: ICourse[]) => {
       this.loadService.isLoading(false);
       this.courses = data;
+      console.log(this.courses)
     });
     this.searchTerm$
     .pipe(
@@ -73,7 +74,7 @@ export class CoursesComponent implements OnInit, OnChanges, OnDestroy {
     this.coursesService.createCourse
   }
   ngOnDestroy() {
-    this.fibonacchi.unsubscribe();
+    // this.fibonacchi.unsubscribe();
   }
 
 }
