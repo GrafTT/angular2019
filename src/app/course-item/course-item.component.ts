@@ -24,15 +24,7 @@ export class CourseItemComponent implements OnInit {
     this.switchBorderColor();
   }
   handleEditBtn() {
-    this.router.navigate(['/courses', this.course.id], {
-      queryParams: {
-        'title': this.course.title,
-        'description': this.course.description,
-        'creationDate': this.course.creationDate,
-        'authors': this.course.authors,
-        'duration': this.course.duration,
-      }
-    })
+    this.router.navigate(['/courses', this.course.id])
   }
 
   private switchBorderColor ():void {

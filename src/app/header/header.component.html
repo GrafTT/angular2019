@@ -2,7 +2,7 @@
     <a class="navbar-brand ml-4" href="#"><i class="fa fa-play-circle"></i> VIDEO COURSE</a>
     <form class="form-inline">
         <button class="btn btn-dark" type="button" *ngIf="!isAuth | async" (click)="handleLogin()"><i class="fa fa-user" ></i> Login</button>
-        <span class="text-white" *ngIf="isAuth | async">{{userLogin}}</span>
+        <span class="text-white" *ngIf="isAuth | async">{{(user$ | async)?.login}}</span>
         <button *ngIf="isAuth | async" class="btn btn-dark" type="button" (click)="handleLogoff()"><i class="fa fa-sign-out-alt"></i> Log off</button>
     </form>
 </nav>

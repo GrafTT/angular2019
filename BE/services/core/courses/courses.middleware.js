@@ -7,7 +7,7 @@ module.exports = (server) => {
 
 	router.delete('/courses/:id', (req, res, next) => {
 		let id = req.params.id;
-		let	courses = server.db.getState().courses.slice(0, 3).filter(item => item.id != id);
+		let	courses = server.db.getState().courses.filter(item => item.id != id);
 		console.log(courses)
 
 		res.json(courses);

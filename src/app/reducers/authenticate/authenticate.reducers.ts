@@ -11,7 +11,7 @@ export interface AuthState {
 
 const initialState: AuthState = {
     token: '',
-    isLogin: true,
+    isLogin: false,
     user: null
 }
 
@@ -20,18 +20,21 @@ export const authReducer = (state = initialState, action: AuthActions) => {
         case authActionsType.login:
             return {
                 ...state,
-
+                isLogin: action.payload
             };
         case authActionsType.logout:
-            localStorage.removeItem('token');
             return {
                 ...state,
                 token: '',
                 isLogin: false,
                 user: null
+            };
+        case authActionsType.setUserInfo:
+            return {
+                ...state,
+                user: action.payload
             }
         default:
             return state;
-
     }
 }

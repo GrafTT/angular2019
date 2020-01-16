@@ -6,11 +6,11 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class FibService {
-  fibGen: Generator;
+  fibGenenerator: Generator;
   sub;
   constructor() { 
-    this.fibGen = this.fib();
-    this.sub = new BehaviorSubject(this.fibGen.next().value)
+    this.fibGenenerator = this.fib();
+    this.sub = new BehaviorSubject(this.fibGenenerator.next().value)
   }
   fib = function* (): Generator {
     let a: number;
@@ -22,6 +22,6 @@ export class FibService {
     }
   }
   fibonachi() {
-    return  this.fibGen.next().value
+    return  this.fibGenenerator.next().value
   }
 }

@@ -1,4 +1,4 @@
-<app-breadcrumbs [title]="course.title || 'new'"></app-breadcrumbs>
+<app-breadcrumbs [title]="(course$ | async)?.title || 'new'"></app-breadcrumbs>
 <div class="w-50 d-flex flex-column mx-auto my-0">
     <div class="form-group">
         <label for="course_title">Title:</label>

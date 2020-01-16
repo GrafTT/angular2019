@@ -25,7 +25,16 @@ export class CoursesService {
     })}));
   }
   getCourse(id:number) {
-    return this.courses.filter(item => item.id === id);
+    return this.http.get(`http://localhost:3004/courses/${id}`).pipe(map((coursesList:any)=>{ return coursesList.map(item => {
+      return {
+        id: item.id,
+        title: item.name,
+        creationDate: item.date,
+        duration: item.length,
+        description: item.description,
+        topRated: item.isTopRated,
+        authors: item.authors}
+    })}));
   }
   deleteCourse(id:number) {
     return this.http.delete(`http://localhost:3004/courses/${id}`).pipe(map((coursesList:any)=>{ return coursesList.map(item => {

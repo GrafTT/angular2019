@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {IUser} from '../models/user';
 import {IUserInfo} from '../models/userinfo';
 import {LoadingService} from '../services/loading.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map} from 'rxjs/operators';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -17,19 +17,16 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router, private loadingService: LoadingService) { }
 
   login(user:IUser) {
-    this.loadingService.isLoading(true);
-    this.http.post('http://localhost:3004/auth/login', user).subscribe((data: {token:string})=>{
-      this.loadingService.isLoading(false);
-      this.token = data.token;
-      if (this.token) {
-        localStorage.setItem("token", JSON.stringify(this.token));
-        this.isLogin.next(true);
+    console.log(user)
+    return this.http.post('http://localhost:3004/auth/login', user).pipe(map((data: {token:string})=>{
+      if (data.token) {
+        localStorage.setItem("token", JSON.stringify(data.token));
         this.router.navigate(['/courses']);
+        return true;
       } else {
-        this.isLogin.next(false);
+        return false;
       }
-    });
-
+    }));
   }
   logout() {
     this.loadingService.isLoading(true);
