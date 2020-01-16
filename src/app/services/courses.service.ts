@@ -1,30 +1,72 @@
 import { Injectable } from '@angular/core';
 import {ICourse} from '../models/course';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
+import {LoadingService} from '../services/loading.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
-  courses:ICourse[] = [
-    {id:0, title:'Video Course 1', creationDate:'2019-11-09', duration:90, description:'Digital Drawing 1 introduces students to the fundamental concepts of 2D art creation for games. Students will learn how to create traditional art and transfer it into digital formats for use in games. Specific topics include: line and form, perspective, and texturing and shading in both traditional and digital mediums. Students will apply knowledge gained in this course to conceptualize and develop concept art used in games.', topRated: true},
-    {id:1, title:'Video Course 2', creationDate:'2019-11-21', duration:95, description:'Digital Drawing 1 introduces students to the fundamental concepts of 2D art creation for games. Students will learn how to create traditional art and transfer it into digital formats for use in games. Specific topics include: line and form, perspective, and texturing and shading in both traditional and digital mediums. Students will apply knowledge gained in this course to conceptualize and develop concept art used in games.', topRated: false},
-    {id:2, title:'Video Course 3', creationDate:'2019-10-01', duration:120, description:' art used in games.', topRated: false},
-]
-  constructor() { }
+  courses:ICourse[] = []
+  constructor(private http:HttpClient, private loadingService: LoadingService) { }
 
-  getCourses() {
-    return this.courses;
+  getCourses(start:number = 0, count:number = 3, textFragment:string = ''): Observable<ICourse[]> {
+    return this.http.get(`http://localhost:3004/courses?start=${start}&count=${count}&textFragment=${textFragment}`).pipe(map((coursesList:any)=>{ return coursesList.map(item => {
+      return {
+        id: item.id,
+        title: item.name,
+        creationDate: item.date,
+        duration: item.length,
+        description: item.description,
+        topRated: item.isTopRated,
+        authors: item.authors}
+    })}));
   }
   getCourse(id:number) {
-    return this.courses.filter(item => item.id === id);
+    return this.http.get(`http://localhost:3004/courses/${id}`).pipe(map((coursesList:any)=>{ return coursesList.map(item => {
+      return {
+        id: item.id,
+        title: item.name,
+        creationDate: item.date,
+        duration: item.length,
+        description: item.description,
+        topRated: item.isTopRated,
+        authors: item.authors}
+    })}));
   }
   deleteCourse(id:number) {
-    this.courses = this.courses.filter(item => item.id !== id);
-    console.log(this.courses)
+    return this.http.delete(`http://localhost:3004/courses/${id}`).pipe(map((coursesList:any)=>{ return coursesList.map(item => {
+      return {
+        id: item.id,
+        title: item.name,
+        creationDate: item.date,
+        duration: item.length,
+        description: item.description,
+        topRated: item.isTopRated,
+        authors: item.authors}
+    })}))
   }
-  createCourse(course:ICourse) {
-    this.courses.push(course);
-    console.log(course)
+  createCourse(course:any) {
+    let newCourse = {
+      id: course.id,
+      name: course.title,
+      date: course.creationDate,
+      length: course.duration,
+      description: course.description,
+      isTopRated: course.topRated,
+      authors: course.authors}
+    return this.http.post(`http://localhost:3004/courses`, newCourse).pipe(map((coursesList:any)=>{ return coursesList.map(item => {
+      return {
+        id: item.id,
+        title: item.name,
+        creationDate: item.date,
+        duration: item.length,
+        description: item.description,
+        topRated: item.isTopRated,
+        authors: item.authors}
+    })}))
   }
   updateCourse(id:number, payload:ICourse) {
     this.courses = this.courses.map(item => {

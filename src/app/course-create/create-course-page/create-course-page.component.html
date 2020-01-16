@@ -1,3 +1,4 @@
+<app-breadcrumbs [title]="(course$ | async)?.title || 'new'"></app-breadcrumbs>
 <div class="w-50 d-flex flex-column mx-auto my-0">
     <div class="form-group">
         <label for="course_title">Title:</label>
@@ -7,11 +8,11 @@
         <label for="course_descr">Description:</label>
         <textarea class="form-control" id="course_descr" rows="4" [(ngModel)]="course.description"></textarea>
     </div>
-    <app-datepicker (datepick)="course.creationDate = $event"></app-datepicker>
-    <app-duration-field (durationfill)="course.duration = $event"></app-duration-field>
-    <app-authors-field (authorsfill)="course.authors = $event"></app-authors-field>
+    <app-datepicker (datepick)="course.creationDate = $event" [created]="course.creationDate"></app-datepicker>
+    <app-duration-field (durationfill)="course.duration = $event" [durationToEdit]="course.duration"></app-duration-field>
+    <app-authors-field (authorsfill)="course.authors = $event" [authorsList]="course.authors"></app-authors-field>
     <div>
         <button type="buttont" class="btn btn-primary my-1" (click)="onSaveNewCourse()">Save</button>
-        <button type="buttont" class="btn btn-default my-1" (click)="onCancel()">Cancel</button>
+        <button type="buttont" class="btn btn-default my-1" (click)="onCancel()" routerLink="/courses">Cancel</button>
     </div>
 </div>

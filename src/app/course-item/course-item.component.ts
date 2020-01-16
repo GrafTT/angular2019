@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
 import { ICourse } from '../models/course';
 
 @Component({
@@ -15,12 +16,15 @@ export class CourseItemComponent implements OnInit {
   delete(id:number){
     confirm("Do you realy want to delete this course?") && this.onDelete.emit(id);
   }
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
   }
   ngOnChanges() {
     this.switchBorderColor();
+  }
+  handleEditBtn() {
+    this.router.navigate(['/courses', this.course.id])
   }
 
   private switchBorderColor ():void {
